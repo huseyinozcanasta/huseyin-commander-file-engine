@@ -1,0 +1,15 @@
+name: Windows Rust tests
+on:
+  push:
+  pull_request:
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show toolchain
+        run: rustc --version
+      - name: Rust unit and separate-process recovery tests
+        run: cargo test --locked -- --test-threads=1
+      - name: Rust Clippy
+        run: cargo clippy --locked --all-targets -- -D warnings
